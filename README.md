@@ -134,4 +134,14 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 
 ## Frontend
 
+### Packages
+
+- [react](https://reactjs.org/)
+
+- [Lodash](https://lodash.com/)
+
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
+
+- [axios](https://github.com/axios/axios)
+
 
