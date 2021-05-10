@@ -189,7 +189,7 @@ class App extends React.Component{
       return
     }
     
-    /*const itemCopy = this.draggedItem
+    const itemCopy = await api.get("/"+this.draggedItem).then(({data})=>data);
 
     console.log("move item"+" "+itemCopy.date)
     let data = await api.put("/"+itemCopy.id,
@@ -201,7 +201,7 @@ class App extends React.Component{
       order:Number(destination.index)
       }
     ).catch(err=>{console.log(err)}).then(()=>{
-      this.refresh()})*/
+      this.refresh()})
       
       await this.refresh();
       this.forceUpdate();
