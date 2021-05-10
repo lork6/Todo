@@ -78,11 +78,11 @@ All will return with json.
 
 #### Http PUT request:
 
-- `api/TodoItems/{id}` in body json with [Todo item](#todo item). 
+- `api/TodoItems/{id}` in body json with [Todo item](#todo-item). 
 
 ##### Changeing column
 
-For Changeing `Todo item` column. You have to specifi wich column you want to put it in by changeing `complete` variable with column index. Column Index is start at 0 and sending in to the server.
+For Changeing `Todo item` column. You have to specifi wich column you want to put it in by changeing `complete` variable with column index and sending in to the server. Column Index is start at 0.
 
 ##### Changeing order in column
 
@@ -96,7 +96,7 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 
 #### Http POST request:
 
-- `api/TodoItems/` in body json with [Todo item](#todo item).
+- `api/TodoItems/` in body json with [Todo item](#todo-item).
 
 ### Models
 
