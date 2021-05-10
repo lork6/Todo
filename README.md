@@ -12,7 +12,7 @@
 
 To run the frontend you need  node.js and yarn.
 
-For [Node.js]([Node.js](https://nodejs.org/en/)) download and install.
+For [Node.js](https://nodejs.org/en/) download and install.
 
 After Node.js is intalled you can install yarn by
 
