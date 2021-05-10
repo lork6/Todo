@@ -34,7 +34,9 @@ For [Node.js](https://nodejs.org/en/) download and install.
 
 After Node.js is intalled you can install yarn by running this command in cmd.
 
-`npm install --global yarn` 
+```
+npm install --global yarn
+```
 
 ### Backend requirements
 
@@ -50,7 +52,9 @@ To run backend you need .NET 5.0 version
 
 First colne or download the project. After that you want to go to */frontend* folder, in the folder you want to run this command in cmd.
 
-`npm install`
+```
+npm install
+```
 
 This will install all the packages for frontend.
 
@@ -60,7 +64,9 @@ After the install is finished you want to run this command in
 
 */frontend* folder in cmd
 
-`npm start`
+```
+npm start
+```
 
 to start running the frontend app.
 
