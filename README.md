@@ -44,7 +44,7 @@ to start running the frontend app.
 
 ## Backend
 
-- [Rest api](#rest api)
+- [Rest api](#rest_api)
 
 - [Models](#models)
 
