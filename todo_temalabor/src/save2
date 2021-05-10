@@ -1,0 +1,518 @@
+import React, {useState,useEffect } from 'react';
+import './App.css';
+import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
+import _ from "lodash";
+
+import Popup from './components/popup';
+
+
+class App extends React.Component{
+  state = {
+    "todo": {
+      title: "Todo",
+      items: [],
+      index: 0
+    },
+    "in-progress": {
+      title: "In Progress",
+      items: [],
+      index: 1
+    },
+    "done": {
+      title: "Completed",
+      items: [],
+      index: 2
+    },
+    "postponed":{
+      title:"Postponed",
+      items:[],
+      index: 3
+    }
+  };
+  
+  
+  constructor(props) {
+    super(props);
+    
+      this.isLoaded0= false;
+      this.isLoaded1=  false;
+      this.isLoaded2=  false;
+      this.isLoaded3= false;
+      this.items= [];
+      this.error= null;
+    
+    
+    this.text = "";
+   
+  
+  }
+  resolveGetData(title,desc,date,id,order,complete){
+    this.setState({
+      
+      
+    }
+    )
+  }
+  
+  componentDidMount(){
+    console.log("didMount")
+    this.refresh();
+    console.log(this.isLoaded0+" tese");
+    
+  }
+  componentDidUpdate = () => {
+    
+  }
+
+  refresh (){
+   
+    this.GetTodo();
+    this.GetPostponed();
+    this.GetProgress();
+    this.GetDone();
+    console.log(this.isLoaded0)
+  }
+         GetTodo() {
+          console.log("Todo")
+            fetch("http://localhost:62151/api/TodoItems/todo")
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  
+                  this.isLoaded0 = true;
+                  console.log(this.isLoaded0);
+                  _.map(result,(item) =>{
+                    this.addItemToTodoView(item.name,item.description,item.date,item.id,item.order)});
+                  this.render()
+                },
+                
+                (error) => {
+                  this.isLoaded0 = true;
+                  
+                }
+              )
+          }
+          GetProgress () {
+            fetch("http://localhost:62151/api/TodoItems/in-progress")
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  this.isLoaded1 = true
+                  console.log(this.isLoaded1);
+                  _.map(result,(item) =>{
+                    this.addItemToProgressView(item.name,item.description,item.date,item.id,item.order)});
+                  this.render();
+                },
+               
+                (error) => {
+                  this.isLoaded1 = true
+                  
+                }
+              )
+          }
+          GetDone (){
+            fetch("http://localhost:62151/api/TodoItems/done")
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  
+                  console.log(this.isLoaded2);
+                  _.map(result,(item) =>{
+                    this.addItemToDoneView(item.name,item.description,item.date,item.id,item.order)});
+                    this.isLoaded2 = true
+                    this.render();
+                  
+                },
+                
+                (error) => {
+                  this.isLoaded2 = true
+                  
+                }
+              )
+          }
+          GetPostponed () {
+            fetch("http://localhost:62151/api/TodoItems/postponed")
+              .then(res => res.json())
+              .then(
+                (result) => {
+                  this.isLoaded3 = true
+                  console.log(this.isLoaded3);
+                  _.map(result,(item) =>{
+                  this.addItemToPostponedView(item.name,item.description,item.date,item.id,item.order)});
+                  this.render()
+                },
+                
+                (error) => {
+                  this.isLoaded3 = true
+                }
+              )
+          }
+  
+  
+  handleDragEnd = async ({destination, source}) => {
+    if (!destination) {
+      return
+    }
+    if (destination.index === source.index && destination.droppableId === source.droppableId) {
+      return
+    }
+    const itemCopy = {...this.state[source.droppableId].items[source.index]}
+    
+    await this.updateOrderSou(this.state[source.droppableId].items, source.index+1,itemCopy.complete);
+    let order = 0;
+    if (this.state[destination.droppableId].items.length > 0){
+      if(destination.index < this.state[destination.droppableId].items.length){
+        if(this.state[destination.droppableId].items[destination.index].order != this.state[destination.droppableId].items.length){
+          order = destination.index;
+          await this.updateOrderDest(this.state[destination.droppableId].items,destination.index,this.state[destination.droppableId].index)
+          
+        }
+      }
+      else{
+        order = this.state[destination.droppableId].items.length;
+      }
+    }
+
+    this.removeItemFromView(itemCopy.id)
+    const json = JSON.stringify({
+      id: Number(itemCopy.id),
+        name: itemCopy.name,
+        complete: Number( this.state[destination.droppableId].index),
+        order:Number( order),//this.state[destination.draggableId].items.length,
+        date: itemCopy.date,
+        
+        description: itemCopy.description
+      
+    });
+
+    // Creating a copy of item before removing it from state
+    //console.log(this.state.todo)
+    console.log(json+" =>" );
+    console.log(this.state[destination.droppableId].index);
+    
+    const a = await fetch("http://localhost:62151/api/TodoItems/"+itemCopy.id,{
+      method:"PUT",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: json
+    })
+    const data = await a.json().then(()=>{}).finally(()=>this.refresh());
+
+    
+   
+  }
+  updateOrderDest = async (list,startIndex,complete) => {
+    var i = startIndex;
+    while (i < list.length){
+      const json = JSON.stringify({
+        id: Number(list[i].id),
+          name: list[i].name,
+          complete: complete,
+          order: list[i].order+1,
+          date: list[i].date,
+          
+          description: list[i].description
+        
+      });
+      await fetch("http://localhost:62151/api/TodoItems/"+list[i].id,{
+        method:"PUT",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: json
+      })
+      i++;
+    }
+  }
+
+  updateOrderSou = async (list,startIndex,complete) => {
+    var i = startIndex;
+    while (i < list.length){
+      const json = JSON.stringify({
+        id: Number(list[i].id),
+          name: list[i].name,
+          complete: complete,
+          order: Number(list[i].order-1),
+          date: list[i].date,
+          
+          description: list[i].description
+        
+      });
+      console.log("updateOrderSource: "+json)
+      await fetch("http://localhost:62151/api/TodoItems/"+list[i].id,{
+        method:"PUT",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: json
+      })
+      i++;
+    }
+  }
+  addItemToTodoView  (title,desc,date,id,order)  {
+    let notIn = true;
+    this.state.todo.items.forEach(element => {
+      if(element.id == id){
+        notIn = false;
+      }
+    });
+    if (notIn){
+      this.setState(prev => {
+        return {
+          
+          ...prev,
+          
+          todo: {
+            title: "Todo",
+            items: [
+              ...prev.todo.items,
+              {
+                id: id.toString(),
+                name: title,
+                description: desc,
+                date: new Date(date),
+                order:order
+              }
+              
+            ],
+            index:0
+          }
+        }
+      });
+    }
+  }
+  addItemToProgressView  (title,desc,date,id,order) {
+    let notIn = true;
+    this.state["in-progress"].items.forEach(element => {
+      if(element.id == id){
+        notIn = false;
+      }
+    });
+    if(notIn){
+    this.setState(prev => {
+      return {
+        
+        ...prev,
+        
+        "in-progress": {
+          title: "In Progress",
+          items: [
+            ...prev['in-progress'].items,
+            {
+              id: id.toString(),
+              name: title,
+              description: desc,
+              date: new Date(date),
+              order:order
+            }
+            
+          ],
+          index:1
+        }
+      }
+    });
+    }
+  }
+  addItemToDoneView (title,desc,date,id,order)  {
+    let notIn = true;
+    this.state["done"].items.forEach(element => {
+      if(element.id == id){
+        notIn = false;
+      }
+    });
+    if (notIn){
+    this.setState(prev => {
+      return {
+        
+        ...prev,
+        
+        done: {
+          title: "Complete",
+          items: [
+            ...prev.done.items,
+            {
+              id: id.toString(),
+              name: title,
+              description: desc,
+              date: new Date(date),
+              order: order
+            }
+            
+          ],
+          index:2
+          
+        }
+      }
+    });
+    }
+    
+  }
+  addItemToPostponedView  (title,desc,date,id,order) {
+    let notIn = true;
+    this.state.postponed.items.forEach(element => {
+      if(element.id == id){
+        notIn = false;
+      }
+    });
+    if (notIn){
+    this.setState(prev => {
+      return {
+        
+        ...prev,
+        
+        postponed: {
+          title: "Postponed",
+          items: [
+            ...prev.postponed.items,
+            {
+              id: id.toString(),
+              name: title,
+              description: desc,
+              date: new Date(date),
+              order:order
+            }
+            
+          ],
+          index:3
+        }
+      }
+    })
+    }
+  }
+
+  addItem = (title,desc,date) => {
+    let order = 0;
+    if (this.state.todo.items.length-1 !== -1){
+      order = this.state.todo.items[this.state.todo.items.length-1].order+1
+    }
+    fetch("http://localhost:62151/api/TodoItems/",{
+      method:"POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: title,
+        description: desc,
+        date: date,
+        complete: 0,
+        order: order
+        
+      })
+    }).then(res => res.json()).finally((a)=>{console.log(a);
+      this.refresh()});
+    
+    
+    
+  }
+  removeItemFromView = (id)=>{
+    this.state.todo.items.forEach(function(item, index, object) {
+      if (item.id == id) {
+        object.splice(index, 1);
+        return;
+      }
+    });
+    this.state["in-progress"].items.forEach(function(item, index, object) {
+      if (item.id == id) {
+        object.splice(index, 1);
+        return;
+      }
+    });
+    this.state.done.items.forEach(function(item, index, object) {
+      if (item.id == id) {
+        object.splice(index, 1);
+        return;
+      }
+    });
+    this.state.postponed.items.forEach(function(item, index, object) {
+      if (item.id == id) {
+        object.splice(index, 1);
+        return;
+      }
+    });
+  }
+
+  removeItem (id)  {
+    fetch("http://localhost:62151/api/TodoItems/"+id,{
+      method:"DELETE"
+    }).then(res => res.json()).then().catch().finally(()=>{this.refresh()})
+    console.log("delete id: "+id)
+    
+    
+  }
+  render(){
+    console.log(this.state+" render" + this.isLoaded0 && this.isLoaded1 && this.isLoaded2 &this.isLoaded3)
+    /*if(!this.isLoaded0 || !this.isLoaded1 || !this.isLoaded2 || !this.isLoaded3){
+      return(
+        <div className="App">Loding...</div> 
+      );
+    }*/
+    
+    if(true){
+      console.log(this.state.todo.items+" render 2")
+    return (
+      
+      <div className="App">
+        
+        <MyButton add={this.addItem}></MyButton>
+        <DragDropContext onDragEnd={this.handleDragEnd}>
+          {_.map(this.state, (data, key) => {
+            return(
+              <div key={key} className={"column"}>
+                <h1 className="title" >{data.title}</h1>
+                <Droppable droppableId={key}>
+                  {(provided, snapshot) => {
+                    return(
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.droppableProps}
+                        className={"droppable-col "+key}
+                      >
+                        {data.items.map((el, index) => {
+                          return(
+                            <Draggable key={el.id.toString()} index={index} draggableId={el.id.toString()}>
+                              {(provided, snapshot) => {
+                                
+                                return(
+                                  <div
+                                    className={`item ${snapshot.isDragging && "dragging"}`}
+                                    ref={provided.innerRef}
+                                    {...provided.draggableProps}
+                                    {...provided.dragHandleProps}
+                                  >
+                                    <div className="item-text">{el.name}</div>
+                                    <div className="item-text">{el.description}</div>
+                                    <div>{el.date.getFullYear()}/{el.date.getMonth()}/{el.date.getDate()}</div>
+                                    <button className="Delete-btn" onClick={() => this.removeItem(el.id)}>
+                                    Remove
+                                    </button>
+                                  </div>
+                                )
+                              }}
+                            </Draggable>
+                          )
+                        })}
+                        {provided.placeholder}
+                      </div>
+                    )
+                  }}
+                </Droppable>
+              </div>
+            )
+          })}
+        </DragDropContext>
+      </div>
+    );
+}}}
+
+function MyButton(props){
+  const [openPopup,setopenPopup] = useState(false);
+
+  return (
+    <div>
+  <button className="add-btn" onClick={() => setopenPopup(true)}>Add</button>
+  <Popup add={props.add} trigger={openPopup} setTrigger={setopenPopup} ></Popup></div>)
+}
+
+export default App;

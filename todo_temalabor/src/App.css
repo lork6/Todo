@@ -1,0 +1,78 @@
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+}
+
+.App .column {
+  width: 30%;
+  margin: 5px;
+  text-align: center;
+}
+
+.column .title {
+  justify-self: center;
+}
+.droppable-col {
+  width: 100%;
+  background-color: lightgrey;
+  padding: 10px 10px 0 10px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  min-height: 40vmax;
+}
+.add {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+}
+.item {
+  margin-bottom: 10px;
+  color: white;
+  border: 1px solid white;
+  padding: 5px;
+  border-radius: 7px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+  border-collapse: collapse;
+}
+.todo .item {
+  background-color: brown;
+}
+.in-progress .item {
+  background-color: cadetblue;
+}
+.done .item {
+  background-color: green;
+}
+.item.dragging {
+  background-color: coral;
+}
+.postponed .item {
+  background-color: grey;
+}
+
+.Delete-btn {
+  background-color: red;
+  padding: 5px;
+  justify-self: end;
+  color: white;
+}
+.item.item-text {
+  word-wrap: break-all;
+}
+
+.add-btn {
+  padding: 5px;
+  width: 100px;
+  height: 35px;
+}
