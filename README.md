@@ -66,7 +66,7 @@ to start running the frontend app.
 
 ### Install Backend
 
-For backend installation follow [microsoft](https://docs.microsoft.com/en-us/iis/application-frameworks/scenario-build-an-aspnet-website-on-iis/configuring-step-1-install-iis-and-asp-net-modules) Documentation.
+For backend installation follow [microsoft](https://docs.microsoft.com/en-us/iis/application-frameworks/scenario-build-an-aspnet-website-on-iis/configuring-step-1-install-iis-and-asp-net-modules) documentation.
 
 ## Documents
 
