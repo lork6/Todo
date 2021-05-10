@@ -8,6 +8,8 @@
 
 - [Documents](#documents)
 
+- [Know issues](#know-issues)
+
 ## Features
 
 An web app wich you can add cards. 
@@ -78,9 +80,15 @@ to start running the frontend app.
 
 - [Models](#models)
 
+- [Data](#data)
+
+- [Controllers](#controllers)
+
+- [Startup cs](#startup-cs)
+
 ### Rest api
 
-Backend url: `http://localhost:62151/`
+Backend base url: `http://localhost:62151/`
 
 - [GET](#http-get-request)
 
@@ -132,6 +140,8 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 
 #### Todo item
 
+Entity
+
 ```
  public class TodoItem
     {
@@ -142,6 +152,29 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
         public DateTime date { get; set; }
         public string description { get; set; }
     }
+```
+
+### Data
+
+#### SqlTodoRepository
+
+`SqlTodoRepository` Class is responsible for getting the data form Database and returning to Controller.
+
+`UpdateOrders` function is wich sets the [Todo items](#todo-item) order if one [Todo item](#todo-item) position changed.
+
+### Controllers
+
+#### TodoItemsController
+
+`TodoItemsController` class is responsible for manageing [Rest api](#rest-api).
+
+### Startup cs
+
+If you want to change Database connection then you have to change this.
+
+```
+services.AddDbContext(opt =>
+ opt.UseInMemoryDatabase("TodoList"));
 ```
 
 
@@ -158,11 +191,21 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 
 - [axios](https://github.com/axios/axios)
 
+### App js
 
 
 
+### Popup js
 
 
+
+## Know issues
+
+1. If you fast grab a card and place it to another column, then the card is can't be grabbed again until a another card is grabbed.
+   
+   This is beacuse the change is made in while grabbing (onDragUpdate) the card. onDragUpdate function is sending the new [Todo item](#todo-item) to the server.  if you do it fast the [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) will not update properly.
+   
+   One solution is doing it in onDragEnd, but then the card is flickering for a second between two position.
 
 
 
