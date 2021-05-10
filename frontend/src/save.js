@@ -20,7 +20,6 @@ function App() {
     "todo": {
       title: "Todo",
       items: [item, item2]
-      
     },
     "in-progress": {
       title: "In Progress",
