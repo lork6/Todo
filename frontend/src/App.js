@@ -24,25 +24,25 @@ class App extends React.Component{
       title: "Todo",
       items: [item],
       index: 0,
-      render: this.GetTodo
+      
     },
     "in-progress": {
       title: "In Progress",
       items: [],
       index: 1,
-      render: this.GetProgress
+      
     },
     "done": {
       title: "Completed",
       items: [],
       index: 2,
-      render: this.GetDone
+      
     },
     "postponed":{
       title:"Postponed",
       items:[],
       index: 3,
-      render: this.GetPostponed
+      
     }
   };
   
@@ -56,7 +56,7 @@ class App extends React.Component{
       this.isLoaded2=  false;
       this.isLoaded3= false;
       this.items= [];
-      this.error= null;
+      this.error = false;
     
     
     this.text = "";
@@ -76,19 +76,26 @@ class App extends React.Component{
     return true;
   }
   refresh = async () => {
-    
+    try {
     await this.GetTodo();
     await this.GetPostponed();
     await this.GetProgress();
     await this.GetDone();
+    this.error = false;
+    } catch (error) {
+      console.log(error);
+      this.error = true;
+    }
+    
     console.log(this.state.todo.items)
     console.log(this.state["in-progress"].items)
     console.log(this.state.done.items)
     console.log(this.state.postponed.items)
   }
          GetTodo = async () => {
+           try {
             let data =  await api.get("/todo")
-                .then(({data}) => data)
+            .then(({data}) => data)
             this.setState(prev =>{
               return {
                 ...prev,
@@ -96,33 +103,40 @@ class App extends React.Component{
                   index: 0,
                   render:this.GetTodo,
                   title: "Todo",
-                  items: data,
-                  
+                  items: data,}
                 }
-              }
-
             })
+           } catch (error) {
+             console.log(error)
+           }
+            
           }
           GetProgress= async () => {
-            let data =  await api.get("/in-progress")
+            try {
+              let data =  await api.get("/in-progress")
                 .then(({data}) => data)
-            this.setState(prev =>{
-              return {
-                ...prev,
-                ["in-progress"]: {
-                  
-                  index: 1,
-                  render:this.GetProgress,
-                  title: "In Progress",
-                  items: data,
-                  
-                }
-              }
-
-            })
+                this.setState(prev =>{
+                  return {
+                    ...prev,
+                    ["in-progress"]: {
+                      index: 1,
+                      render:this.GetProgress,
+                      title: "In Progress",
+                      items: data,
+                      
+                    }
+                  }
+    
+                })
+            } catch (error) {
+              console.log(error)
+            }
+            
+            
           }
           GetDone = async()=>{
-            let data =  await api.get("/done")
+            try {
+              let data =  await api.get("/done")
                 .then(({data}) => data)
             this.setState(prev =>{
               return {
@@ -137,9 +151,14 @@ class App extends React.Component{
               }
 
             })
+            } catch (error) {
+              console.log(error)
+            }
+            
           }
           GetPostponed =async ()=> {
-            let data =  await api.get("/postponed")
+            try {
+              let data =  await api.get("/postponed")
                 .then(({data}) => data)
             this.setState(prev =>{
               return {
@@ -154,6 +173,10 @@ class App extends React.Component{
               }
 
             })
+            } catch (error) {
+              console.log(error)
+            }
+            
           }
     onDragStart =  async (results) => {
         console.log("drag start "+this.state[results.source.droppableId].items[results.source.index].id)
@@ -173,20 +196,25 @@ class App extends React.Component{
             //this.draggedItem = {...this.state[droppableId].items[source.index]};
             let item = await api.get("/"+this.draggedItem).then(({data})=>data);
             console.log(item);
-            let data = await api.put("/"+item.id,
+            try {
+              await api.put("/"+item.id,
             { id:Number( item.id),
             name: item.name,
             date: item.date,
             description:item.description,
             complete: Number(this.state[destination.droppableId].index),
-            order:Number(destination.index)
-      }
-    ).catch(err=>{console.log(err)}).then(()=>{
-      
-    })
-    await this.refresh();
-    this.forceUpdate();
-          }
+            order:Number(destination.index)})
+            .catch(err=>{console.log(err)}).then(()=>{
+              this.refresh()
+            })
+            this.error = false;
+            } catch (error) {
+              console.log(error);
+              this.error = true;
+            }
+            
+    
+    }
     
   
   handleDragEnd = async ({destination, source}) => {
@@ -201,27 +229,28 @@ class App extends React.Component{
     const itemCopy = await api.get("/"+this.draggedItem).then(({data})=>data);
 
     console.log("move item"+" "+itemCopy.date)
-    let data = await api.put("/"+itemCopy.id,
-    {id:Number( itemCopy.id),
-      name: itemCopy.name,
-      date:itemCopy.date,
-      description:itemCopy.description,
-      complete: Number(this.state[destination.droppableId].index),
-      order:Number(destination.index)
-      }
-    ).catch(err=>{console.log(err)}).then(()=>{
-      this.refresh()})
-      
-      await this.refresh();
-      this.forceUpdate();
-    
-    
+    try {
+      await api.put("/"+itemCopy.id,
+      {id:Number( itemCopy.id),
+        name: itemCopy.name,
+        date:itemCopy.date,
+        description:itemCopy.description,
+        complete: Number(this.state[destination.droppableId].index),
+        order:Number(destination.index)})
+      .catch(err=>{console.log(err)}).then(()=>{
+        this.refresh()})
+        this.error = false;
+    } catch (error) {
+      console.log(error);
+      this.error = true;
+    }
+   
    
   }
   
   addItem = async (title,desc,date) => {
     console.log("additem"+" "+date)
-    let data = await api.post("/",{
+    await api.post("/",{
       name:title,
       date:date,
       description:desc,
@@ -247,6 +276,10 @@ class App extends React.Component{
         <div className="App">Loding...</div> 
       );
     }*/
+    let err = "";
+    if(this.error){
+      err = "Network error!"
+    }
     
     if(true){
       console.log(this.state.todo.items+" render 2")
@@ -256,6 +289,7 @@ class App extends React.Component{
         
         <MyButton add={this.addItem}></MyButton>
         <DragDropContext onDragEnd={this.handleDragEnd} onDragUpdate={this.onDragUpdate} onDragStart={this.onDragStart}>
+          <div>{err}</div>
           {_.map(this.state, (data, key) => {
             return(
               <div key={key} className={"column"}>
