@@ -10,31 +10,47 @@
 
 ## Requirements
 
+### Frontend
+
 To run the frontend you need  node.js and yarn.
 
 For [Node.js](https://nodejs.org/en/) download and install.
 
-After Node.js is intalled you can install yarn by
+After Node.js is intalled you can install yarn by running this command in cmd.
 
-`npm install --global yarn`
+`npm install --global yarn` 
+
+### Backend
+
+To run backend you need .NET 5.0 version
 
 ## Install
+
+- [Frontend](#install-frontend)
+
+- [Backend](#install-backend)
+
+### Install frontend
 
 First colne or download the project. After that you want to go to */frontend* folder, in the folder you want to run this command in cmd.
 
 `npm install`
 
-This will install all the
+This will install all the packages for frontend.
 
-### Starting the app
+#### Starting the app
 
-After the install is finished you want to run this command in  
+After the install is finished you want to run this command in
 
-*/frontend* folder
+*/frontend* folder in cmd
 
 `npm start`
 
 to start running the frontend app.
+
+### Install Backend
+
+
 
 ## Documents
 
@@ -105,7 +121,6 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 ```
  public class TodoItem
     {
-    
         public long Id { get; set; }
         public string name { get; set; }
         public int complete { get; set; }
