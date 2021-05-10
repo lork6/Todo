@@ -1,12 +1,24 @@
 # Todo application
 
+- [Features](#features)
+
 - [Requirements](#requirements)
 
 - [Install](#install)
 
 - [Documents](#documents)
-  
-  
+
+## Features
+
+An web app wich you can add cards. 
+
+Cards can be move around in columns.
+
+Cards can be removed.
+
+Cards can store title, description and date.
+
+Columns represents the cards status.
 
 ## Requirements
 
@@ -143,5 +155,19 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 - [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd)
 
 - [axios](https://github.com/axios/axios)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
