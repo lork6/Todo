@@ -104,13 +104,13 @@ Backend base url: `http://localhost:62151/`
 
 - Get item by id: `api/TodoItems/{id}` 
 
-- Get all items from todo column: `api/TodoItems/todo`
+- Get all items from Todo column: `api/TodoItems/todo`
 
 - Get all items from In Progress column: `api/TodoItems/in-progress`
 
 - Get all items from Completed column: `api/TodoItems/done`
 
-- Get all items from todo column: `api/TodoItems/postponed`
+- Get all items from Postponed column: `api/TodoItems/postponed`
 
 All will return with json.
 
