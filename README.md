@@ -20,6 +20,8 @@ Cards can store title, description and date.
 
 Columns represents the cards status.
 
+Cards change colors by which column they are in.
+
 ## Requirements
 
 ### Frontend
