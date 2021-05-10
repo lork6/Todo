@@ -1,10 +1,10 @@
-import React, {useState,useEffect } from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import {DragDropContext, Droppable, Draggable,DroppableStateSnapshot} from "react-beautiful-dnd";
+import {DragDropContext, Droppable, Draggable} from "react-beautiful-dnd";
 import _ from "lodash";
 import axios from 'axios';
 import Popup from './components/popup';
-
+import {Button} from 'react-bootstrap'
 
 const api = axios.create({
   baseURL: "http://localhost:62151/api/TodoItems/"
@@ -303,7 +303,7 @@ function MyButton(props){
 
   return (
     <div>
-  <button className="add-btn" onClick={() => setopenPopup(true)}>Add</button>
+  <Button className="add-btn m-1" onClick={() => setopenPopup(true)}>Add</Button>
   <Popup add={props.add} trigger={openPopup} setTrigger={setopenPopup} ></Popup></div>)
 }
 
