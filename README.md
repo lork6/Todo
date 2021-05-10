@@ -26,7 +26,7 @@ Cards change colors by which column they are in.
 
 ## Requirements
 
-### Frontend
+### Frontend requirements
 
 To run the frontend you need  node.js and yarn.
 
@@ -36,7 +36,7 @@ After Node.js is intalled you can install yarn by running this command in cmd.
 
 `npm install --global yarn` 
 
-### Backend
+### Backend requirements
 
 To run backend you need .NET 5.0 version
 
