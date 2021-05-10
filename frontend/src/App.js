@@ -9,12 +9,20 @@ import {Button} from 'react-bootstrap'
 const api = axios.create({
   baseURL: "http://localhost:62151/api/TodoItems/"
 })
+const item ={
+  id: 0,
+  order: 0,
+  complete:0,
+  description: "test",
+  date:new Date(),
+  name: "test1"
 
+}
 class App extends React.Component{
   state = {
     "todo": {
       title: "Todo",
-      items: [],
+      items: [item],
       index: 0,
       render: this.GetTodo
     },
@@ -276,9 +284,7 @@ class App extends React.Component{
                                     <div className="item-text">{el.name}</div>
                                     <div className="item-text">{el.description}</div>
                                     <div>{new Date(el.date).getFullYear()}/{new Date(el.date).getMonth()}/{new Date(el.date).getDate()}</div>
-                                    <button className="Delete-btn" onClick={() => this.removeItem(el.id)}>
-                                    Remove
-                                    </button>
+                                    <Button className="btn-danger" onClick={() => this.removeItem(el.id)}>Remove</Button>
                                   </div>
                                 )
                               }}
