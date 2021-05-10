@@ -44,7 +44,7 @@ to start running the frontend app.
 
 ## Backend
 
-- [Rest api](#rest_api)
+- [Rest api](#rest-api)
 
 - [Models](#models)
 
@@ -52,13 +52,13 @@ to start running the frontend app.
 
 Backend url: `http://localhost:62151/`
 
-- [GET](#Http GET request:)
+- [GET](#http-get-request)
 
-- PUT
+- [PUT](#http-put-request)
 
-- DELETE
+- [DELETE](#http-delete-request)
 
-- POST
+- [POST](#http-post-request)
 
 #### Http GET request:
 
@@ -96,7 +96,7 @@ For Changeing `Todo item` order in column. You have to specifi wich position you
 
 #### Http POST request:
 
-- `api/TodoItems/ in body json with [Todo item](#todo item).
+- `api/TodoItems/` in body json with [Todo item](#todo item).
 
 ### Models
 
