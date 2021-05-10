@@ -181,6 +181,10 @@ services.AddDbContext(opt =>
 
 ## Frontend
 
+- [App js](#app-js)
+
+- [Popup js](#popup-js)
+
 ### Packages
 
 - [react](https://reactjs.org/)
@@ -193,11 +197,65 @@ services.AddDbContext(opt =>
 
 ### App js
 
+##### addItem
 
+It requireds
+
+- title: string
+
+- desc: string (description)
+
+- date: Date
+
+Then create [Todo item](#todo-item) json and send it to the backend.
+
+##### removeItem
+
+It required
+
+- id: long or int
+
+Then it send it to the backend to remove that item wich has that id.
+
+##### refresh
+
+This function call all the Get\* function
+
+- GetTodo
+
+- GetProgress
+
+- GetDone
+
+- GetPostponed
+
+They get each column items and then set the [App js](#app-js) state with the items.
+
+#### MyButton
+
+For the Add button wich sets the popup to show or don't show.
+
+##### onDragStart
+
+When the user start to grab a card then its called. It save the card in to `this.draggedItem` variable for the [onDragUpdate](#ondragupdate).
+
+##### onDragUpdate
+
+Is called when the card is grabbed and moving.
+
+The function is sending the data to the backend if the moving card is in new position.
+
+##### handleDragEnd
+
+It is when the grabbed card is released.
+
+Function is sending the data to the backend by wich positon the card was left.
 
 ### Popup js
 
+It has a form wich can be filled with name, description and date.
 
+The Add button call the [addItem](#addItem) function from [App js](#app-js)
 
 ## Know issues
 
