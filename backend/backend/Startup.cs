@@ -11,6 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using backend.Models;
+using backend.Data;
 
 namespace backend
 {
@@ -29,6 +30,8 @@ namespace backend
             services.AddDbContext<TodoContext>(opt =>
                opt.UseInMemoryDatabase("TodoList"));
             services.AddControllers();
+            services.AddScoped<ITodoRepositroy, SqlTodoRepository>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
