@@ -68,6 +68,12 @@ After the install is finished you want to run this command in
 npm start
 ```
 
+OR
+
+```bash
+yarn start
+```
+
 to start running the frontend app.
 
 ### Install Backend
