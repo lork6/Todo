@@ -199,19 +199,19 @@ services.AddDbContext(opt =>
 
 ### App js
 
-- [addItem ()](#addItem-())
+- [addItem ()](#addItem-)
 
-- [removeItem ()](#removeItem-())
+- [removeItem ()](#removeItem-)
 
-- [refresh ()](#refresh-())
+- [refresh ()](#refresh-)
 
-- [onDragStart ()](#ondragstart-())
+- [onDragStart ()](#ondragstart-)
 
-- [onDragUpdate ()](#ondragupdate-())
+- [onDragUpdate ()](#ondragupdate-)
 
-- [handleDragEnd ()](#handledragend-())
+- [handleDragEnd ()](#handledragend-)
 
-- [All get ()](#all-get-())
+- [All get ()](#all-get-)
 
 - [MyButton](#mybutton)
 
@@ -239,7 +239,7 @@ Arguments:
 
 ##### refresh ()
 
-This function call all the [Get](#all-get-())\* functions.
+This function call all the [Get](#all-get-)\* functions.
 
 ##### onDragStart ()
 
