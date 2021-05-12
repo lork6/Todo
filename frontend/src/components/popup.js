@@ -17,19 +17,19 @@ function Popup(props){
                     <Form.Text>
                         <h3>Add item</h3>
                     </Form.Text>
-                    <Form.Group >
+                    <Form.Group>
                         <Form.Label htmlFor="name">Name</Form.Label>
-                        <Form.Control id="name" type="text" value={title} onChange={(e) => setText(e.target.value) }/>
+                        <Form.Control required maxlength="15" id="name" type="text" value={title} onChange={(e) => setText(e.target.value) }/>
                     </Form.Group>
-                    <Form.Group >
+                    <Form.Group>
                         <Form.Label htmlFor="description">Description</Form.Label>
-                        <Form.Control id="description" type="text" value={description} onChange={(e) => setDescription(e.target.value) }/>
+                        <Form.Control id="description" maxlength="50" type="text" value={description} onChange={(e) => setDescription(e.target.value) }/>
                     </Form.Group>
-                    <Form.Group >
+                    <Form.Group>
                         <Form.Label htmlFor="date">Date</Form.Label>
                         <br />
-                        <DatePicker className="form-control" selected={selectDate} onChange={date => setDate(date)} dateFormat='yyyy/MM/dd' minDate={new Date()}/>
-                    </Form.Group >
+                        <DatePicker required className="form-control" selected={selectDate} onChange={date => setDate(date)} dateFormat='yyyy/MM/dd' minDate={new Date()}/>
+                    </Form.Group>
 
                     <Button onClick={() => props.add(title,description,selectDate)} className="add-btn">Add</Button>
                     <Button className="btn-secondary" onClick={() => props.setTrigger(false)}>close</Button>
