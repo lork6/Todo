@@ -19,6 +19,8 @@ const item ={
 
 }
 class App extends React.Component{
+  months = ["01","02","03","04","05","06","07","08","09","10","11","12"]
+  days = ["01","02","03","04","05","06","07","08","09"]
   state = {
     "todo": {
       title: "Todo",
@@ -249,16 +251,21 @@ class App extends React.Component{
   }
   
   addItem = async (title,desc,date) => {
-    console.log("additem"+" "+date)
-    await api.post("/",{
-      name:title,
-      date:date,
-      description:desc,
-      order: this.state.todo.items.length,
-      complete:0
-    })
-    await this.refresh()
-  }
+    
+    if (title !== "" && date !== null){
+      console.log("additem"+" "+date)
+      console.log("additem"+" "+title)
+      await api.post("/",{
+        name:title,
+        date:date,
+        description:desc,
+        order: this.state.todo.items.length,
+        complete:0
+      })
+      await this.refresh()
+      }
+    }
+    
   
   removeItem (id)  {
     fetch("http://localhost:62151/api/TodoItems/"+id,{
@@ -306,7 +313,11 @@ class App extends React.Component{
                           return(
                             <Draggable key={el.id.toString()} index={index} draggableId={el.id.toString()}>
                               {(provided, snapshot) => {
-                                
+                               
+                                let day = new Date(el.date).getDate()
+                                if (day<10){
+                                  day = this.days[day-1]
+                                }
                                 return(
                                   <div
                                     className={`item ${snapshot.isDragging && "dragging"}`}
@@ -317,7 +328,7 @@ class App extends React.Component{
                                   >
                                     <div className="item-text">{el.name}</div>
                                     <div className="item-text">{el.description}</div>
-                                    <div>{new Date(el.date).getFullYear()}/{new Date(el.date).getMonth()}/{new Date(el.date).getDate()}</div>
+                                    <div>{new Date(el.date).getFullYear()}.{this.months[new Date(el.date).getMonth()]}.{day}.</div>
                                     <Button className="btn-danger" onClick={() => this.removeItem(el.id)}>Remove</Button>
                                   </div>
                                 )

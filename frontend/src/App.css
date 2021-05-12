@@ -45,19 +45,17 @@
   max-width: 100%;
   border-collapse: collapse;
 }
+
 .todo .item {
   background-color: brown;
 }
-.in-progress .item {
+.in-progress.item {
   background-color: cadetblue;
 }
-.done .item {
+.done.item {
   background-color: green;
 }
-.item.dragging {
-  background-color: coral;
-}
-.postponed .item {
+.postponed.item {
   background-color: grey;
 }
 
