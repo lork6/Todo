@@ -16,6 +16,7 @@ namespace backend.Models
             {
                 options.UseSqlite(@"Data Source=C:\foo_db\Todo.db");
             }
+            base.OnConfiguring(options);
         }
            
 
