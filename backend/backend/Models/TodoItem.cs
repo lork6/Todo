@@ -16,5 +16,17 @@ namespace backend.Models
         public int order { get; set; }
         public DateTime date { get; set; }
         public string description { get; set; }
+        public TodoItem()
+        {
+        }
+        public TodoItem(string name, int complete,int order,DateTime date,string description)
+        {
+            this.name = name;
+            this.complete = complete;
+            this.order = order;
+            this.date = date;
+            this.description = description;
+        }
+
     }
 }

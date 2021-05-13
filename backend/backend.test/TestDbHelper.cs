@@ -8,7 +8,7 @@ namespace backend.Test
     {
         public static SqliteConnection CreateConnection()
         {
-            var conn = new SqliteConnection(@"Data Source=C:\foo_db\Todo.db");
+            var conn = new SqliteConnection(@"DataSource=:memory:");
             conn.Open();
             return conn;
         }
