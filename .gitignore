@@ -181,3 +181,4 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+backend/.vs/backend/v16/TestStore/0/000.testlog
