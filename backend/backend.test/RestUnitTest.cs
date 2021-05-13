@@ -3,16 +3,16 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace backend.Test
+namespace backend.test
 {
     [TestClass]
     class RestUnitTest
     {
         private static readonly TodoItem[] todoItems = new[]
         {
-            new TodoItem("1", 0, 0,new System.DateTime(), "00"),
-            new TodoItem("2", 0, 1,new System.DateTime(), "00"),
-            new TodoItem("3", 0, 2,new System.DateTime(), "00"),
+            new TodoItem("1", 0, 0, new System.DateTime(), "00"),
+            new TodoItem("2", 0, 1, new System.DateTime(), "00"),
+            new TodoItem("3", 0, 2, new System.DateTime(), "00"),
         };
         [TestMethod]
         public async Task GetAllTodoItems()

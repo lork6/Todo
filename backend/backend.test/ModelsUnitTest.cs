@@ -19,14 +19,6 @@ namespace backend.test
                 Assert.IsNotNull(entityType, "TodoItem entitas nem ismert a DbContext-ben");
             }
         }
-        [TestMethod]
-        public void IsOrderIsCorrect()
-        {
-           using(var dbconn = TestDbHelper.CreateConnection())
-            {
-                var dbContext = TestDbHelper.CreateDbContext(dbconn);
-
-            } 
-        }
+        
     }
 }
