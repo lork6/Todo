@@ -16,5 +16,36 @@ namespace backend.Models
         public int order { get; set; }
         public DateTime date { get; set; }
         public string description { get; set; }
+        public TodoItem()
+        {
+        }
+        public TodoItem(string name, int complete,int order,DateTime date,string description)
+        {
+            this.name = name;
+            this.complete = complete;
+            this.order = order;
+            this.date = date;
+            this.description = description;
+        }
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as TodoItem);
+        }
+
+        public bool Equals(TodoItem other)
+        {
+            return other != null &&
+                   Id == other.Id &&
+                   name == other.name &&
+                   complete == other.complete &&
+                   order == other.order &&
+                   date == other.date &&
+                   description == other.description;
+
+        }
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id, name, complete, order, date, description);
+        }
     }
 }
