@@ -11,7 +11,13 @@ namespace backend.Models
         }
         
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite(@"Data Source=C:\foo_db\Todo.db");
+        {
+            if (!options.IsConfigured)
+            {
+                options.UseSqlite(@"Data Source=C:\foo_db\Todo.db");
+            }
+        }
+           
 
         public DbSet<TodoItem> TodoItems { get; set; }
     }
