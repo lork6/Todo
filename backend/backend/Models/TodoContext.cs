@@ -9,6 +9,9 @@ namespace backend.Models
             : base(options)
         {
         }
+        
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite(@"Data Source=C:\foo_db\Todo.db");
 
         public DbSet<TodoItem> TodoItems { get; set; }
     }
