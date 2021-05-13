@@ -28,7 +28,7 @@ function Popup(props){
                     <Form.Group>
                         <Form.Label htmlFor="date">Date</Form.Label>
                         <br />
-                        <DatePicker required className="form-control" selected={selectDate} onChange={date => setDate(date)} dateFormat='yyyy/MM/dd' minDate={new Date()}/>
+                        <DatePicker required className="form-control datepicker" selected={selectDate} onChange={date => setDate(date)} dateFormat='yyyy/MM/dd' minDate={new Date()}/>
                     </Form.Group>
 
                     <Button onClick={() => props.add(title,description,selectDate)} className="add-btn">Add</Button>
