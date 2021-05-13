@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using backend;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
-using backend.Models;
 
 namespace backend.test
 {
@@ -28,10 +28,10 @@ namespace backend.test
             builder.ConfigureServices(services =>
             {
                 // Replace DB configuration
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<TodoContext>));
+                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<Models.TodoContext>));
                 if (descriptor != null)
                     services.Remove(descriptor);
-                services.AddDbContext<TodoContext>(options => options.UseSqlite(sqliteConnection));
+                services.AddDbContext<Models.TodoContext>(options => options.UseSqlite(sqliteConnection));
 
                 // Build the service provider.
                 var sp = services.BuildServiceProvider();
@@ -39,7 +39,7 @@ namespace backend.test
                 // Ensure db is created (required for creating tables)
                 using (var scope = sp.CreateScope())
                 {
-                    var db = scope.ServiceProvider.GetRequiredService<TodoContext>();
+                    var db = scope.ServiceProvider.GetRequiredService<Models.TodoContext>();
                     db.Database.EnsureCreated();
                 }
             });
@@ -52,7 +52,7 @@ namespace backend.test
         {
             using (var serviceScope = this.Services.CreateScope())
             {
-                var db = serviceScope.ServiceProvider.GetRequiredService<TodoContext>();
+                var db = serviceScope.ServiceProvider.GetRequiredService<Models.TodoContext>();
                 foreach (var e in entities)
                     db.Add(e);
                 db.SaveChanges();
@@ -64,7 +64,7 @@ namespace backend.test
         {
             using (var serviceScope = this.Services.CreateScope())
             {
-                var db = serviceScope.ServiceProvider.GetRequiredService<TodoContext>();
+                var db = serviceScope.ServiceProvider.GetRequiredService<Models.TodoContext>();
                 return db.Set<T>().ToList();
             }
         }

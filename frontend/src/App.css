@@ -49,13 +49,13 @@
 .todo .item {
   background-color: brown;
 }
-.in-progress .item {
+.in-progress.item {
   background-color: cadetblue;
 }
-.done .item {
+.done.item {
   background-color: green;
 }
-.postponed .item {
+.postponed.item {
   background-color: grey;
 }
 
