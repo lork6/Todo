@@ -19,11 +19,11 @@ function Popup(props){
                     </Form.Text>
                     <Form.Group>
                         <Form.Label htmlFor="name">Name</Form.Label>
-                        <Form.Control required maxlength="15" id="name" type="text" value={title} onChange={(e) => setText(e.target.value) }/>
+                        <Form.Control required maxLength="15" id="name" type="text" value={title} onChange={(e) => setText(e.target.value) }/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label htmlFor="description">Description</Form.Label>
-                        <Form.Control id="description" maxlength="50" type="text" value={description} onChange={(e) => setDescription(e.target.value) }/>
+                        <Form.Control id="description" maxLength="50" type="text" value={description} onChange={(e) => setDescription(e.target.value) }/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label htmlFor="date">Date</Form.Label>

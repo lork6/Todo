@@ -53,16 +53,12 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     
-      this.isLoaded0= false;
-      this.isLoaded1=  false;
-      this.isLoaded2=  false;
-      this.isLoaded3= false;
       this.items= [];
       this.error = false;
     
     
     this.text = "";
-    this.refresh(); 
+    
     
    
   
