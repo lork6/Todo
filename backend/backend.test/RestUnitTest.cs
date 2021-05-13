@@ -1,33 +1,19 @@
+﻿using backend.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using backend.Models;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
 namespace backend.test
 {
     [TestClass]
-    public class ModelsUnitTest
+    class RestUnitTest
     {
-        [TestMethod]
-        public void IsTodoItemModelExist()
-        {
-            using (var dbConn = TestDbHelper.CreateConnection())
-            {
-                var dbContext = TestDbHelper.CreateDbContext(dbConn);
-
-                var entityType = dbContext.Model.FindEntityType(typeof(Models.TodoItem));
-                Assert.IsNotNull(entityType, "TodoItem entitas nem ismert a DbContext-ben");
-            }
-        }
         private static readonly TodoItem[] todoItems = new[]
-{
+        {
             new TodoItem("1", 0, 0, new System.DateTime(), "00"),
             new TodoItem("2", 0, 1, new System.DateTime(), "00"),
             new TodoItem("3", 0, 2, new System.DateTime(), "00"),
         };
-
         [TestMethod]
         public async Task GetAllTodoItems()
         {
@@ -51,7 +37,7 @@ namespace backend.test
             {
                 testScope.AddSeedEntities(todoItems);
                 var client = testScope.CreateClient();
-                var response = await client.GetAsync("/api/TodoItems/done");
+                var response = await client.GetAsync("api/TodoItems/done");
 
                 response.EnsureSuccessStatusCode();
                 var actual = await response.Content.ReadFromJsonAsync<TodoItem[]>();
@@ -70,7 +56,7 @@ namespace backend.test
 
                 foreach (var expected in testScope.GetDbTableContent<TodoItem>())
                 {
-                    var response = await client.GetAsync($"/api/TodoItems/{expected.Id}");
+                    var response = await client.GetAsync($"api/TodoItems/{expected.Id}");
 
                     response.EnsureSuccessStatusCode();
                     var actual = await response.Content.ReadFromJsonAsync<TodoItem>();
@@ -80,6 +66,5 @@ namespace backend.test
                 }
             }
         }
-
     }
 }

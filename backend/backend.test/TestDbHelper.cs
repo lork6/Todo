@@ -2,13 +2,13 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Test
+namespace backend.test
 {
     public static class TestDbHelper
     {
         public static SqliteConnection CreateConnection()
         {
-            var conn = new SqliteConnection(@"Data Source=C:\foo_db\Todo.db");
+            var conn = new SqliteConnection(@"DataSource=:memory:");
             conn.Open();
             return conn;
         }
