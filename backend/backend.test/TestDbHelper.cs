@@ -2,7 +2,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Test
+namespace backend.test
 {
     public static class TestDbHelper
     {
