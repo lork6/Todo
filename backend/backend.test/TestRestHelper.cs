@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace backend.Test
+namespace backend.test
 {
     /// <summary>
     /// Provies a WebApi web server for testing.
